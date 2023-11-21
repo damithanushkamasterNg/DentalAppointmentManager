@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="root" prefHeight="586.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.AppointmentController">
+    <children>
+        <VBox layoutX="14.0" layoutY="14.0" prefHeight="514.0" prefWidth="318.0" spacing="10.0">
+            <children>
+                <Label text="Patient Information" />
+                <TextField fx:id="patientNameField" prefHeight="30.0" prefWidth="210.0" promptText="Patient Name" />
+                <TextField fx:id="patientAddressField" prefHeight="30.0" prefWidth="210.0" promptText="Patient Address" />
+                <TextField fx:id="patientPhoneField" prefHeight="26.0" prefWidth="236.0" promptText="Patient Phone" />
+
+                <Label text="Appointment Details" />
+                <ComboBox fx:id="appointmentDateField" prefHeight="30.0" prefWidth="120.0" promptText="Appointment Date" />
+                <ComboBox fx:id="appointmentTimeField" prefHeight="30.0" prefWidth="120.0" promptText="Appointment Time" />
+
+                <Label text="Treatment Details" />
+                <TextField fx:id="treatmentTypeField" prefHeight="30.0" prefWidth="210.0" promptText="Treatment Type" />
+                <TextField fx:id="treatmentCostField" prefHeight="30.0" prefWidth="210.0" promptText="Treatment Cost" />
+
+                <Button fx:id="makeAppointmentButton" onAction="#makeAppointmentButtonAction" prefHeight="30.0" prefWidth="161.0" text="Make Appointment" />
+                <Button fx:id="updateAppointmentButton" onAction="#updateAppointmentButtonAction" prefHeight="30.0" prefWidth="162.0" text="Update Appointment" />
+                <Button fx:id="searchAppointmentButton" onAction="#searchAppointmentButtonAction" prefHeight="30.0" prefWidth="163.0" text="Search Appointment" />
+                <Button fx:id="viewAppointmentsButton" onAction="#viewAppointmentsButtonAction" prefHeight="30.0" prefWidth="162.0" text="View Appointments" />
+            </children>
+        </VBox>
+
+
+        <TableView fx:id="appointmentsTable" layoutX="339.0" layoutY="14.0" prefHeight="514.0" prefWidth="701.0">
+            <columns>
+                <TableColumn fx:id="appointmentIdColumn" prefWidth="100.0" text="Appointment ID" />
+                <TableColumn fx:id="patientNameColumn" prefWidth="120.0" text="Patient Name" />
+                <TableColumn fx:id="appointmentDateColumn" prefWidth="120.0" text="Appointment Date" />
+                <TableColumn fx:id="appointmentTimeColumn" prefWidth="120.0" text="Appointment Time" />
+                <TableColumn fx:id="treatmentTypeColumn" prefWidth="120.0" text="Treatment Type" />
+                <TableColumn fx:id="treatmentCostColumn" prefWidth="120.0" text="Treatment Cost" />
+            </columns>
+        </TableView>
+
+        <HBox layoutX="14.0" layoutY="400.0" spacing="10.0" />
+
+        <Label fx:id="totalFeeLabel" layoutX="264.0" layoutY="552.0" prefHeight="30.0" prefWidth="120.0" text="Total Fee: " />
+    </children>
+</AnchorPane>

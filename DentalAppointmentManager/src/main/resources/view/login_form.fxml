@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="loginAnc" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1abc9c;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.LoginFormController">
+   <children>
+      <Label alignment="CENTER" layoutX="209.0" layoutY="29.0" prefHeight="18.0" prefWidth="182.0" text="Login ">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="userNameId" layoutX="143.0" layoutY="121.0" prefHeight="26.0" prefWidth="345.0" promptText="User Name" />
+      <TextField fx:id="passwordId" layoutX="143.0" layoutY="187.0" prefHeight="26.0" prefWidth="345.0" promptText="Password" />
+      <Button layoutX="147.0" layoutY="295.0" mnemonicParsing="false" onAction="#clickOnLoginButton" prefHeight="26.0" prefWidth="337.0" text="Login">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label layoutX="147.0" layoutY="244.0" text="Don't have an account ? register here" />
+   </children>
+</AnchorPane>
