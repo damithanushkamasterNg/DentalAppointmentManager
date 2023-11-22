@@ -32,11 +32,12 @@ public class LoginFormController {
            Parent root = FXMLLoader.load(this.getClass().getResource("/view/appointment_view.fxml"));
            Stage primaryStage = (Stage) this.loginAnc.getScene().getWindow();
            // Set the size you desire
-           primaryStage.setWidth(1000); // Set the width
-           primaryStage.setHeight(800); // Set the height
+//           primaryStage.setWidth(1000); // Set the width
+//           primaryStage.setHeight(800); // Set the height
            Scene scene = new Scene(root);
            primaryStage.setScene(scene);
-
+           primaryStage.centerOnScreen();
+           primaryStage.setScene(scene);
            primaryStage.show();;
            primaryStage.setTitle("Dashboard");
        }else {

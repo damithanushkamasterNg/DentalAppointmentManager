@@ -32,8 +32,10 @@ public class AppointmentController {
     private ComboBox<String> appointmentDateField;
     @FXML
     private ComboBox<String> appointmentTimeField;
+
     @FXML
-    private TextField treatmentTypeField;
+    private ComboBox<String> treatmentTypeField;
+
     @FXML
     private TextField treatmentCostField;
     @FXML
@@ -53,11 +55,22 @@ public class AppointmentController {
     @FXML
     private TableColumn<Appointment, Double> treatmentCostColumn;
 
+    @FXML
+    private TableColumn<Appointment, Double> registrationAmountColumn;
+
+    @FXML
+    private TableColumn<Appointment, Double> remainingBalanceColumn;
+
+    private Treatment treatment;
+   private Appointment appointment = new Appointment();
+
     public void initialize() {
         // Initialize appointment date and time fields
         appointmentDateField.setItems(FXCollections.observableArrayList("Monday", "Wednesday", "Saturday", "Sunday"));
         appointmentTimeField.setItems(FXCollections.observableArrayList("06:00 PM - 09:00 PM", "03:00 PM - 10:00 PM"));
-
+        treatment = new Treatment();
+        ObservableList<String> treatmentTypes = FXCollections.observableArrayList(treatment.getTreatmentPrices().keySet());
+        treatmentTypeField.setItems(treatmentTypes);
         // Initialize appointments table
         appointmentsTable.setItems(appointments);
         appointmentIdColumn.setCellValueFactory(cellData -> cellData.getValue().appointmentIdProperty());
@@ -67,6 +80,14 @@ public class AppointmentController {
         treatmentTypeColumn.setCellValueFactory(cellData -> cellData.getValue().treatmentTypeProperty());
         treatmentCostColumn.setCellValueFactory(cellData -> {
             DoubleProperty value = cellData.getValue().treatmentCostProperty();
+            return Bindings.createObjectBinding(() -> value.get());
+        });
+        registrationAmountColumn.setCellValueFactory(cellData -> {
+            DoubleProperty value = cellData.getValue().registrationAmountProperty();
+            return Bindings.createObjectBinding(() -> value.get());
+        });
+        registrationAmountColumn.setCellValueFactory(cellData -> {
+            DoubleProperty value = cellData.getValue().remainingBalanceProperty();
             return Bindings.createObjectBinding(() -> value.get());
         });
 
@@ -87,24 +108,23 @@ public class AppointmentController {
         }
 
         // Validate treatment type
-        if (treatmentTypeField.getText().isEmpty()) {
+        if (treatmentTypeField.getValue().isEmpty()) {
             showAlert("Please enter the treatment type.");
             return;
         }
 
         // Create new appointment
-        Appointment appointment = new Appointment();
+
         appointment.setPatientName(patientNameField.getText());
+        //appointment.setAppointmentId(appointmentIdField.getText());
         appointment.setPatientAddress(patientAddressField.getText());
         appointment.setPatientPhone(patientPhoneField.getText());
         appointment.setAppointmentDate(appointmentDateField.getSelectionModel().getSelectedItem());
         appointment.setAppointmentTime(appointmentTimeField.getSelectionModel().getSelectedItem());
-        appointment.setTreatmentType(treatmentTypeField.getText());
+//        appointment.setTreatmentType(treatmentTypeField.getText());
 
         // Calculate treatment cost
-        Treatment treatment = new Treatment(appointment.getTreatmentType());
-        double treatmentCost = treatment.getCost();
-        treatmentCostField.setText(String.valueOf(treatmentCost));
+        // Populate the ComboBox with treatment types
 
         // Accept registration fee
         TextInputDialog registrationFeeDialog = new TextInputDialog();
@@ -113,7 +133,23 @@ public class AppointmentController {
         Optional<String> registrationFeeOption = registrationFeeDialog.showAndWait();
         if (registrationFeeOption.isPresent()) {
             double registrationFee = Double.parseDouble(registrationFeeOption.get());
-            appointment.setRegistrationFee(registrationFee);
+
+
+            if (registrationFee > Double.parseDouble(treatmentCostField.getText())) {
+                showAlert("Registration fee can not be exceeded the treatment cost.");
+                return;
+            } else {
+                appointment.setRegistrationFee(registrationFee);
+
+                String selectedTreatment = treatmentTypeField.getSelectionModel().getSelectedItem();
+                if (selectedTreatment != null) {
+                    // Retrieve price from the map and display it or perform any necessary action
+                    double price = treatment.getTreatmentPrices().get(selectedTreatment);
+                    treatmentCostField.setText(String.valueOf(price));
+                    appointment.setTreatmentCost(Double.parseDouble(treatmentCostField.getText()));
+                }
+                appointment.setRemainingBalance(Double.parseDouble(treatmentCostField.getText()) - registrationFee);
+            }
 
             // Add appointment to list
             appointments.add(appointment);
@@ -156,7 +192,7 @@ public class AppointmentController {
         appointment.setPatientPhone(patientPhoneField.getText());
         appointment.setAppointmentDate(appointmentDateField.getSelectionModel().getSelectedItem());
         appointment.setAppointmentTime(appointmentTimeField.getSelectionModel().getSelectedItem());
-        appointment.setTreatmentType(treatmentTypeField.getText());
+      //  appointment.setTreatmentType(treatmentTypeField.getText());
 
         // Calculate treatment cost
         Treatment treatment = new Treatment(appointment.getTreatmentType());
@@ -219,7 +255,7 @@ public class AppointmentController {
         patientPhoneField.setText(appointment.getPatientPhone());
         appointmentDateField.getSelectionModel().select(appointment.getAppointmentDate());
         appointmentTimeField.getSelectionModel().select(appointment.getAppointmentTime());
-        treatmentTypeField.setText(appointment.getTreatmentType());
+     //   treatmentTypeField.setText(appointment.getTreatmentType());
         treatmentCostField.setText(String.valueOf(appointment.getTreatmentCost()));
     }
 
@@ -229,14 +265,14 @@ public class AppointmentController {
     }
 
     private void clearFields() {
-        appointmentIdField.clear();
-        patientNameField.clear();
-        patientAddressField.clear();
-        patientPhoneField.clear();
-        appointmentDateField.getSelectionModel().clearSelection();
-        appointmentTimeField.getSelectionModel().clearSelection();
-        treatmentTypeField.clear();
-        treatmentCostField.clear();
+//        appointmentIdField.setText("");
+        patientNameField.setText("");
+        patientAddressField.setText("");
+        patientPhoneField.setText("");
+        appointmentDateField.setValue("");
+        appointmentTimeField.setValue("");
+        treatmentTypeField.setValue("");
+        treatmentCostField.setText("");
     }
 
     private void showAlert(String message) {
@@ -283,6 +319,16 @@ public class AppointmentController {
         // Add more details to the invoice as needed
 
         showAlert(invoice.toString()); // Display invoice details in an alert
+    }
+
+    public void onChangeTreatmentTypeField(ActionEvent actionEvent) {
+        String selectedTreatment = treatmentTypeField.getSelectionModel().getSelectedItem();
+        if (selectedTreatment != null) {
+            // Retrieve price from the map and display it or perform any necessary action
+            double price = treatment.getTreatmentPrices().get(selectedTreatment);
+            treatmentCostField.setText(String.valueOf(price));
+            appointment.setTreatmentCost(Double.parseDouble(treatmentCostField.getText()));
+        }
     }
 }
 

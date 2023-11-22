@@ -17,11 +17,16 @@ public class Appointment {
     private SimpleStringProperty patientAddress;
     private SimpleStringProperty patientPhone;
 
+    private SimpleDoubleProperty registrationAmount;
+    private SimpleDoubleProperty remainingBalance;
+
+
     private double registrationFee;
 
 
     public Appointment(String appointmentId, String patientName, String appointmentDate,
-                       String appointmentTime, String treatmentType, double treatmentCost, String patientAddress, String patientPhone) {
+                       String appointmentTime, String treatmentType, double treatmentCost, String patientAddress, String patientPhone,
+                       double registrationAmount, double remainingBalance) {
         this.appointmentId = new SimpleStringProperty(appointmentId);
         this.patientName = new SimpleStringProperty(patientName);
         this.appointmentDate = new SimpleStringProperty(appointmentDate);
@@ -30,10 +35,22 @@ public class Appointment {
         this.treatmentCost = new SimpleDoubleProperty(treatmentCost);
         this.patientAddress = new SimpleStringProperty(patientAddress);
         this.patientPhone = new SimpleStringProperty(patientPhone);
+        this.registrationAmount = new SimpleDoubleProperty(registrationAmount);
+        this.remainingBalance = new SimpleDoubleProperty(remainingBalance);
+
     }
 
     public Appointment(){
-
+        this.appointmentId = new SimpleStringProperty("");
+        this.patientName = new SimpleStringProperty("");
+        this.appointmentDate = new SimpleStringProperty("");
+        this.appointmentTime = new SimpleStringProperty("");
+        this.treatmentType = new SimpleStringProperty("");
+        this.treatmentCost = new SimpleDoubleProperty(0.0);
+        this.patientAddress = new SimpleStringProperty("");
+        this.patientPhone = new SimpleStringProperty("");
+        this.registrationAmount = new SimpleDoubleProperty(0.0);
+        this.remainingBalance = new SimpleDoubleProperty(0.0);
     }
 
     public SimpleStringProperty appointmentIdProperty() {
@@ -58,6 +75,38 @@ public class Appointment {
 
     public SimpleDoubleProperty treatmentCostProperty() {
         return treatmentCost;
+    }
+
+    public SimpleStringProperty patientAddressProperty() {
+        return patientAddress;
+    }
+
+    public SimpleStringProperty patientPhoneProperty() {
+        return patientPhone;
+    }
+
+    public double getRegistrationAmount() {
+        return registrationAmount.get();
+    }
+
+    public SimpleDoubleProperty registrationAmountProperty() {
+        return registrationAmount;
+    }
+
+    public void setRegistrationAmount(double registrationAmount) {
+        this.registrationAmount.set(registrationAmount);
+    }
+
+    public double getRemainingBalance() {
+        return remainingBalance.get();
+    }
+
+    public SimpleDoubleProperty remainingBalanceProperty() {
+        return remainingBalance;
+    }
+
+    public void setRemainingBalance(double remainingBalance) {
+        this.remainingBalance.set(remainingBalance);
     }
 
     public String getAppointmentId() {
