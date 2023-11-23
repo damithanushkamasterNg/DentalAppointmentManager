@@ -22,11 +22,11 @@ public class Treatment {
     public Treatment() {
         // Initialize treatment types with respective prices
         treatmentPrices = new HashMap<>();
-        treatmentPrices.put("Cleanings", 50.0); // Replace with appropriate prices
-        treatmentPrices.put("Whitening", 100.0);
-        treatmentPrices.put("Filling", 80.0);
-        treatmentPrices.put("Nerve Filling", 120.0);
-        treatmentPrices.put("Root Canal Therapy", 200.0);
+        treatmentPrices.put("Cleanings", 1500.0); // Replace with appropriate prices
+        treatmentPrices.put("Whitening", 2000.0);
+        treatmentPrices.put("Filling", 3000.0);
+        treatmentPrices.put("Nerve Filling", 2500.0);
+        treatmentPrices.put("Root Canal Therapy", 3500.0);
     }
 
     // Getters and setters for treatmentType and cost

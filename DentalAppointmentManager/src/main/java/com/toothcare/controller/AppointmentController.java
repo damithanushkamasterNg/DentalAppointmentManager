@@ -1,4 +1,5 @@
 package com.toothcare.controller;
+import com.toothcare.db.DbConnection;
 import com.toothcare.dto.Appointment;
 import com.toothcare.dto.Treatment;
 import javafx.beans.binding.Bindings;
@@ -9,6 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class AppointmentController {
@@ -62,7 +66,10 @@ public class AppointmentController {
     private TableColumn<Appointment, Double> remainingBalanceColumn;
 
     private Treatment treatment;
-   private Appointment appointment = new Appointment();
+
+    private int value = 0;
+    private double treatmentCost;
+    private String treatmentType;
 
     public void initialize() {
         // Initialize appointment date and time fields
@@ -86,7 +93,7 @@ public class AppointmentController {
             DoubleProperty value = cellData.getValue().registrationAmountProperty();
             return Bindings.createObjectBinding(() -> value.get());
         });
-        registrationAmountColumn.setCellValueFactory(cellData -> {
+        remainingBalanceColumn.setCellValueFactory(cellData -> {
             DoubleProperty value = cellData.getValue().remainingBalanceProperty();
             return Bindings.createObjectBinding(() -> value.get());
         });
@@ -95,6 +102,8 @@ public class AppointmentController {
 
     @FXML
     private void makeAppointmentButtonAction(ActionEvent event) {
+
+         Appointment appointment = new Appointment();
         // Validate patient information
         if (patientNameField.getText().isEmpty() || patientAddressField.getText().isEmpty() || patientPhoneField.getText().isEmpty()) {
             showAlert("Please enter all patient information.");
@@ -116,11 +125,16 @@ public class AppointmentController {
         // Create new appointment
 
         appointment.setPatientName(patientNameField.getText());
-        //appointment.setAppointmentId(appointmentIdField.getText());
+        value = value + 1;
+        appointment.setAppointmentId(Integer.toString(value));
         appointment.setPatientAddress(patientAddressField.getText());
         appointment.setPatientPhone(patientPhoneField.getText());
         appointment.setAppointmentDate(appointmentDateField.getSelectionModel().getSelectedItem());
         appointment.setAppointmentTime(appointmentTimeField.getSelectionModel().getSelectedItem());
+        appointment.setTreatmentType(treatmentType);
+        appointment.setTreatmentCost(treatmentCost);
+        treatmentType = new String();
+        treatmentCost = 0.0;
 //        appointment.setTreatmentType(treatmentTypeField.getText());
 
         // Calculate treatment cost
@@ -134,12 +148,16 @@ public class AppointmentController {
         if (registrationFeeOption.isPresent()) {
             double registrationFee = Double.parseDouble(registrationFeeOption.get());
 
+            if(registrationFee < 1000){
+                showAlert("Registration fee should be greater than 1000.00");
+                return;
+            }
 
             if (registrationFee > Double.parseDouble(treatmentCostField.getText())) {
                 showAlert("Registration fee can not be exceeded the treatment cost.");
                 return;
             } else {
-                appointment.setRegistrationFee(registrationFee);
+                appointment.setRegistrationAmount(registrationFee);
 
                 String selectedTreatment = treatmentTypeField.getSelectionModel().getSelectedItem();
                 if (selectedTreatment != null) {
@@ -158,7 +176,7 @@ public class AppointmentController {
             clearFields();
 
             // Show confirmation message
-            showAlert("Appointment created successfully.");
+
         } else {
             showAlert("Registration fee is required.");
         }
@@ -203,10 +221,12 @@ public class AppointmentController {
         appointmentsTable.refresh();
 
         // Clear fields
-        clearFields();
+
 
         // Show confirmation message
         showAlert("Appointment updated successfully.");
+        clearFields();
+
     }
 
     @FXML
@@ -265,7 +285,6 @@ public class AppointmentController {
     }
 
     private void clearFields() {
-//        appointmentIdField.setText("");
         patientNameField.setText("");
         patientAddressField.setText("");
         patientPhoneField.setText("");
@@ -323,11 +342,16 @@ public class AppointmentController {
 
     public void onChangeTreatmentTypeField(ActionEvent actionEvent) {
         String selectedTreatment = treatmentTypeField.getSelectionModel().getSelectedItem();
-        if (selectedTreatment != null) {
+        if (selectedTreatment != null && !selectedTreatment.isEmpty()) {
+            double price = 0.0;
             // Retrieve price from the map and display it or perform any necessary action
-            double price = treatment.getTreatmentPrices().get(selectedTreatment);
-            treatmentCostField.setText(String.valueOf(price));
-            appointment.setTreatmentCost(Double.parseDouble(treatmentCostField.getText()));
+            price = treatment.getTreatmentPrices().get(selectedTreatment);
+            if(!Double.isNaN(price)){
+                treatmentCostField.setText(String.valueOf(price));
+                treatmentCost = price;
+                treatmentType = selectedTreatment;
+            }
+
         }
     }
 }
