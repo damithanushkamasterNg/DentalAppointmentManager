@@ -1,0 +1,8 @@
+/* styles.css */
+.custom-button {
+    -fx-background-color: #ABEBC6;
+}
+
+.custom-button:hover {
+    -fx-background-color: #82E0AA; /* Change color on hover */
+}

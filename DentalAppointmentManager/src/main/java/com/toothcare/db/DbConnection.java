@@ -8,7 +8,7 @@ public class DbConnection {
     private static DbConnection dbConnection;
     private static Connection con;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/restaurant";
+    private static final String URL = "jdbc:mysql://localhost:3306/tooth_care_db";
     private static Properties props = new Properties();
 
     static {
