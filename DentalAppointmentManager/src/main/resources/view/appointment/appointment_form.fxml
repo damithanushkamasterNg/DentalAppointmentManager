@@ -2,39 +2,41 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="518.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.appointment.AppointmentController">
+<AnchorPane prefHeight="605.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.appointment.AppointmentController">
     <stylesheets>
         <URL value="@../appointment/appointment_form.css" />
     </stylesheets>
 
     <!-- Appointment List -->
-    <TableView fx:id="appointmentTableView" layoutX="24.0" layoutY="57.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="736.0">
+    <TableView fx:id="appointmentTableView" layoutX="48.0" layoutY="109.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClickOnTableBody" prefHeight="300.0" prefWidth="736.0">
         <columns>
             <TableColumn fx:id="patientIdCol" prefWidth="100.0" text="Patient ID" />
-            <TableColumn fx:id="channelDateCol" prefWidth="200.0" text="Channel Date" />
-            <TableColumn fx:id="channelTimeCol" prefWidth="150.0" text="Channel Time" />
+            <TableColumn fx:id="channelDateCol" prefWidth="154.40000915527344" text="Channel Date" />
+            <TableColumn fx:id="channelTimeCol" prefWidth="196.0" text="Channel Time" />
             <TableColumn fx:id="regFeeStatusCol" prefWidth="150.0" text="Reg Fee Status" />
-            <TableColumn fx:id="treatmentIdCol" prefWidth="100.0" text="Treatment ID" />
-            <TableColumn fx:id="appointmentStatusCol" prefWidth="200.0" text="Appointment Status" />
+            <TableColumn fx:id="treatmentIdCol" prefWidth="150.4000244140625" text="Treatment ID" />
+            <TableColumn fx:id="appointmentStatusCol" prefWidth="149.5999755859375" text="Appointment Status" />
         </columns>
     </TableView>
-
-    <!-- Appointment Form -->
-    <TextField fx:id="patientIdField" layoutX="24.0" layoutY="372.0" prefHeight="26.0" prefWidth="100.0" promptText="Patient ID" />
-    <TextField fx:id="channelTimeField" layoutX="344.0" layoutY="372.0" prefHeight="26.0" prefWidth="150.0" promptText="Channel Time" />
-    <TextField fx:id="regFeeStatusField" layoutX="500.0" layoutY="372.0" prefHeight="26.0" prefWidth="150.0" promptText="Reg Fee Status" />
-    <TextField fx:id="treatmentIdField" layoutX="24.0" layoutY="410.0" prefHeight="33.0" prefWidth="100.0" promptText="Treatment ID" />
-    <TextField fx:id="appointmentStatusField" layoutX="134.0" layoutY="410.0" prefHeight="33.0" prefWidth="400.0" promptText="Appointment Status" />
+    <TextField fx:id="channelTimeField" layoutX="443.0" layoutY="426.0" prefHeight="26.0" prefWidth="150.0" promptText="Channel Time" />
+    <TextField fx:id="treatmentFeeId" layoutX="355.0" layoutY="465.0" prefHeight="28.0" prefWidth="239.0" promptText="Treatment Fee" />
     <!-- Buttons for actions -->
-    <Button layoutX="560.0" layoutY="457.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="47.0" prefWidth="180.0" text="Update" />
-    <Button layoutX="24.0" layoutY="457.0" mnemonicParsing="false" onAction="#resetAppointmentDetail" prefHeight="47.0" prefWidth="159.0" text="Reset" />
-    <Button layoutX="198.0" layoutY="457.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="47.0" prefWidth="159.0" text="Delete" />
-    <Button layoutX="371.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickOnAppointmentAddBtn" prefHeight="47.0" prefWidth="146.0" text="Add" />
-   <DatePicker fx:id="channelDateField" layoutX="134.0" layoutY="372.0" promptText="Channel Date" />
+    <Button layoutX="633.0" layoutY="526.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="47.0" prefWidth="180.0" text="Update" />
+    <Button layoutX="70.0" layoutY="526.0" mnemonicParsing="false" onAction="#resetAppointmentDetail" prefHeight="47.0" prefWidth="159.0" text="Reset" />
+    <Button layoutX="275.0" layoutY="532.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="47.0" prefWidth="159.0" text="Delete" />
+    <Button layoutX="461.0" layoutY="526.0" mnemonicParsing="false" onAction="#clickOnAppointmentAddBtn" prefHeight="47.0" prefWidth="146.0" text="Add" />
+   <DatePicker fx:id="channelDateField" layoutX="248.0" layoutY="426.0" promptText="Channel Date" />
+   <ComboBox fx:id="patientIdField" layoutX="32.0" layoutY="424.0" prefHeight="30.0" prefWidth="210.0" promptText="Patient" />
+   <ComboBox fx:id="treatmentFieldId" layoutX="32.0" layoutY="465.0" onAction="#onChangeTreatmentType" prefHeight="28.0" prefWidth="309.0" promptText="Treatment ID" />
+   <ComboBox fx:id="regFeeStatusField" layoutX="609.0" layoutY="426.0" onAction="#onChangeRegisterFee" prefHeight="30.0" prefWidth="239.0" promptText="Register Fee Status" />
+   <TextField fx:id="balanceToBePaidId" layoutX="606.0" layoutY="465.0" prefHeight="28.0" prefWidth="246.0" promptText="Balace To Be Paid" />
+   <ComboBox fx:id="patientIdForSearch" layoutX="70.0" layoutY="39.0" prefHeight="28.0" prefWidth="450.0" promptText="Select a Patient" />
+   <Button layoutX="549.0" layoutY="39.0" mnemonicParsing="false" onAction="#searchAppointmentByPatientId" prefHeight="30.0" prefWidth="246.0" text="Search By Patient" />
 </AnchorPane>
