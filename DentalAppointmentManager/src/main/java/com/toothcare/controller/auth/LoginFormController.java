@@ -1,4 +1,4 @@
-package com.toothcare.controller;
+package com.toothcare.controller.auth;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +29,7 @@ public class LoginFormController {
         String userName = userNameId.getText();
         String password = passwordId.getText();
        if(Objects.equals(userName, "Admin") && Objects.equals(password, "123")){
-           Parent root = FXMLLoader.load(this.getClass().getResource("/view/login_form.fxml"));
+           Parent root = FXMLLoader.load(this.getClass().getResource("/view/auth/login_form.fxml"));
            Stage primaryStage = (Stage) this.loginAnc.getScene().getWindow();
            // Set the size you desire
 //           primaryStage.setWidth(1000); // Set the width

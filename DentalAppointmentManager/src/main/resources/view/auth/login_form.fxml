@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginAnc" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1abc9c;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.LoginFormController">
+<AnchorPane fx:id="loginAnc" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1abc9c;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.auth.LoginFormController">
    <children>
       <Label alignment="CENTER" layoutX="209.0" layoutY="29.0" prefHeight="18.0" prefWidth="182.0" text="Login ">
          <font>

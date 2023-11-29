@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="605.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.appointment.AppointmentController">
     <stylesheets>
-        <URL value="@../appointment/appointment_form.css" />
+        <URL value="@../../style/form_style.css" />
     </stylesheets>
 
     <!-- Appointment List -->
