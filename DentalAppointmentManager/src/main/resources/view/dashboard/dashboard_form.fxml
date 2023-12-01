@@ -18,8 +18,7 @@
          </image>
       </ImageView>
 
-      <Button fx:id="paymentButtonId" layoutX="26.0" layoutY="179.0" mnemonicParsing="false"
-              onAction="#clickPaymentManagementBtn" prefHeight="56.0" prefWidth="246.0" styleClass="custom-button" text="Payment Management">
+      <Button fx:id="paymentButtonId" layoutX="26.0" layoutY="179.0" mnemonicParsing="false" onAction="#clickPaymentManagementBtn" prefHeight="56.0" prefWidth="246.0" styleClass="custom-button" text="Payment Management">
          <font>
             <Font size="18.0" />
          </font></Button>
@@ -27,8 +26,7 @@
          <font>
             <Font size="18.0" />
          </font></Button>
-      <Button layoutX="26.0" layoutY="35.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="246.0" styleClass="custom-button"
-              onAction="#clickPatientManagementBtn" text="Patient Management">
+      <Button layoutX="26.0" layoutY="35.0" mnemonicParsing="false" onAction="#clickPatientManagementBtn" prefHeight="56.0" prefWidth="246.0" styleClass="custom-button" text="Patient Management">
          <font>
             <Font size="18.0" />
          </font></Button>

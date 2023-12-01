@@ -1,4 +1,5 @@
 package com.toothcare.controller.appointment;
+
 import com.toothcare.db.DbConnection;
 import com.toothcare.dto.Appointment;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
@@ -33,6 +35,10 @@ public class AppointmentController implements Initializable {
     public TextField treatmentFeeId;
     @FXML
     public ComboBox<String> patientIdForSearch;
+    public Button paymentButtonId;
+    @FXML
+    public TextField paymentAmountId;
+    public DatePicker paymentDateId;
 
     @FXML
     private ComboBox<String> patientIdField;
@@ -71,6 +77,11 @@ public class AppointmentController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> appointmentStatusCol;
 
+    @FXML
+    private TableColumn<Appointment, String> paymentStatus;
+
+    public int appointmentId;
+
 
     // Other methods for handling actions, loading data, etc. will go here
 
@@ -82,6 +93,34 @@ public class AppointmentController implements Initializable {
         loadPatients();
         loadTreatment();
         loadRegFeeStatus();
+        if (paymentAmountId.getText() != null && !paymentAmountId.getText().isEmpty() && paymentDateId.getValue() != null) {
+            paymentButtonId.setDisable(false); // Enable the button if the text field is not empty
+        } else {
+            paymentButtonId.setDisable(true); // Disable the button if the text field is empty
+            paymentButtonId.setStyle("");
+        }
+        // Add a listener to the paymentAmountId TextField
+        paymentAmountId.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Check if the text field has a value
+            if (newValue != null && !newValue.isEmpty() && paymentDateId.getValue() != null) {
+                paymentButtonId.setDisable(false); // Enable the button if the text field is not empty
+            } else {
+                paymentButtonId.setDisable(true); // Disable the button if the text field is empty
+                paymentButtonId.setStyle("");
+            }
+        });
+
+        // Assuming paymentDateId is a DatePicker
+        paymentDateId.valueProperty().addListener((observable, oldValue, newValue) -> {
+            // Check if the date picker has a value and if it's a valid date
+            if (newValue != null && paymentAmountId.getText() != null && !paymentAmountId.getText().isEmpty()) {
+                paymentButtonId.setDisable(false); // Enable the button if a date is selected
+            } else {
+                paymentButtonId.setDisable(true); // Disable the button if no date is selected
+                paymentButtonId.setStyle(""); // Reset any button styles if needed
+            }
+        });
+
     }
 
     private void initializeTableColumns() {
@@ -92,10 +131,11 @@ public class AppointmentController implements Initializable {
         regFeeStatusCol.setCellValueFactory(cellData -> cellData.getValue().registrationStatusStringProperty());
         treatmentIdCol.setCellValueFactory(cellData -> cellData.getValue().treatmentTypeProperty());
         appointmentStatusCol.setCellValueFactory(cellData -> cellData.getValue().appointmentStatusProperty());
+        paymentStatus.setCellValueFactory(cellData -> cellData.getValue().paymentStatusProperty());
 
         appointmentTableView.getColumns().setAll(
                 patientIdCol, channelDateCol, channelTimeCol,
-                regFeeStatusCol, treatmentIdCol, appointmentStatusCol
+                regFeeStatusCol, treatmentIdCol, appointmentStatusCol, paymentStatus
         );
     }
 
@@ -103,10 +143,11 @@ public class AppointmentController implements Initializable {
     private void loadAllAppointments() {
         try {
             Connection connection = DbConnection.getInstance().getConnection();
-            String sql = "SELECT a.*, p.name AS patient_name, t.type AS treatment_type " +
+            String sql = "SELECT a.*, p.name AS patient_name, t.type AS treatment_type, pm.total_fee AS payment_total_fee, pm.payment_status AS payment_status " +
                     "FROM appointment a " +
                     "INNER JOIN patient p ON a.patient_id = p.id " +
-                    "INNER JOIN treatment t ON a.treatment_id = t.id";
+                    "INNER JOIN treatment t ON a.treatment_id = t.id " +
+                    "LEFT JOIN payment pm ON pm.appointment_id = a.id";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
 
@@ -114,13 +155,15 @@ public class AppointmentController implements Initializable {
 
             while (resultSet.next()) {
                 Appointment appointment = new Appointment();
-                appointment.setId((resultSet.getInt("id")));
+                appointment.setId(resultSet.getInt("id"));
                 appointment.setPatientName(resultSet.getString("patient_name"));
                 appointment.setChannelDate(resultSet.getDate("channel_date").toLocalDate());
                 appointment.setChannelTime(resultSet.getTime("channel_time").toLocalTime());
-                appointment.setRegistrationStatusString(resultSet.getBoolean("reg_fee_status") ? "Not Paid":"Paid");
+                appointment.setRegistrationStatusString(resultSet.getBoolean("reg_fee_status") ? "Not Paid" : "Paid");
                 appointment.setTreatmentType(resultSet.getString("treatment_type"));
                 appointment.setAppointmentStatus(resultSet.getString("appointment_status"));
+                appointment.setPaymentStatus(resultSet.getString("payment_status"));
+
 
                 appointmentList.add(appointment);
             }
@@ -133,6 +176,7 @@ public class AppointmentController implements Initializable {
             // Handle exceptions appropriately
         }
     }
+
 
 
     @FXML
@@ -293,7 +337,6 @@ public class AppointmentController implements Initializable {
     }
 
 
-
     private void loadPatients() {
         try {
             Connection con = DbConnection.getInstance().getConnection();
@@ -347,8 +390,8 @@ public class AppointmentController implements Initializable {
     }
 
 
-    public void calculateBalanceToBePaid(){
-        if(treatmentFieldId.getValue() == null){
+    public void calculateBalanceToBePaid() {
+        if (treatmentFieldId.getValue() == null) {
             return;
         }
         try {
@@ -391,8 +434,73 @@ public class AppointmentController implements Initializable {
                 treatmentFieldId.setValue(appointment.getTreatmentType());
                 channelDateField.setValue(appointment.channelDateProperty().getValue());
                 channelTimeField.setText(appointment.channelTimeProperty().getValue().toString());
+                appointmentId = appointment.getId();
                 calculateBalanceToBePaid();
             }
+        }
+    }
+
+    @FXML
+    public void createPayment(ActionEvent actionEvent) {
+        try {
+            Connection con = DbConnection.getInstance().getConnection();
+
+            // SQL query with correct syntax and parameter placeholders
+            String sql = "INSERT INTO payment (appointment_id, total_fee, payment_date, payment_status) VALUES (?, ?, ?, ?)";
+            PreparedStatement pstm = con.prepareStatement(sql);
+
+            // Set parameters for the PreparedStatement
+            pstm.setInt(1, appointmentId);
+
+            if (!paymentAmountId.getText().isEmpty()) {
+                BigDecimal paymentAmount = new BigDecimal(paymentAmountId.getText());
+
+                // Set the BigDecimal value in the PreparedStatement
+                pstm.setBigDecimal(2, paymentAmount);
+            } else {
+                // Handle the case where the TextField is empty
+                // For example, setting a default value or handling the absence of payment amount
+                pstm.setBigDecimal(2, BigDecimal.ZERO); // Set a default value as zero or handle accordingly
+            }
+
+            pstm.setDate(3, Date.valueOf(paymentDateId.getValue()));
+
+            try {
+                BigDecimal balanceToBePaid = new BigDecimal(balanceToBePaidId.getText());
+                BigDecimal enteredPaymentAmount = new BigDecimal(paymentAmountId.getText());
+
+                int comparisonResult = balanceToBePaid.compareTo(enteredPaymentAmount);
+
+                if (comparisonResult < 0) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Payment amount should not be greater than balance to be paid!").show();
+                    return;
+                } else if (comparisonResult > 0) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Entered payment amount should not equal to payment amount!").show();
+                    return;
+                } else if (comparisonResult == 0) {
+                    pstm.setString(4, "Paid");
+                    // Continue with your PreparedStatement operations here
+                }
+            } catch (NumberFormatException e) {
+                // Handle the case where the input is not a valid number
+                new Alert(Alert.AlertType.ERROR, "Invalid input! Please enter a valid number.").show();
+            }
+//            pstm.setTime(3, Time.valueOf(channelTime));
+//            pstm.setBoolean(4, regFeeStatus);
+//            pstm.setInt(5, treatmentId);
+//            pstm.setString(6, appointmentStatus);
+
+            boolean isSaved = pstm.executeUpdate() > 0;
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Payment saved successfully!").show();
+                loadAllAppointments();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to save payment.").show();
+            }
+
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         }
     }
 }

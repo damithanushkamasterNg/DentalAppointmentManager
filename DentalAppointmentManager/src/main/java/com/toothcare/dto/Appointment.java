@@ -22,6 +22,7 @@ public class Appointment {
     private final StringProperty patientName = new SimpleStringProperty();
     private final StringProperty treatmentType = new SimpleStringProperty();
     private final StringProperty registrationStatusString = new SimpleStringProperty();
+    private final StringProperty paymentStatus = new SimpleStringProperty();
     // Other fields, constructors, getters, and setters...
 
     public IntegerProperty idProperty() {
@@ -126,5 +127,17 @@ public class Appointment {
 
     public void setRegistrationStatusString(String registrationStatusString) {
         this.registrationStatusString.set(registrationStatusString);
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus.get();
+    }
+
+    public StringProperty paymentStatusProperty() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus.set(paymentStatus);
     }
 }
