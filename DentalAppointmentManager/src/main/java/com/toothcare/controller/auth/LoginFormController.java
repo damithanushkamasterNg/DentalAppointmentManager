@@ -24,6 +24,15 @@ public class LoginFormController {
     String userName = "Admin";
     String password ="123";
 
+    /**
+     * Handles the action event when the login button is clicked.
+     * Retrieves the entered username and password from the respective input fields.
+     * Validates the entered credentials against predefined values and displays the dashboard view if the credentials are correct.
+     * Otherwise, shows an error alert for incorrect credentials.
+     *
+     * @param event The ActionEvent captured from clicking the login button
+     * @throws IOException Signals that an I/O exception has occurred when loading the dashboard view
+     */
     @FXML
     void clickOnLoginButton(ActionEvent event) throws IOException {
         String userName = userNameId.getText();
