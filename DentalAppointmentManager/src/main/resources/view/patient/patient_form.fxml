@@ -7,31 +7,31 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="518.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.patient.PatientController">
+<AnchorPane prefHeight="521.0" prefWidth="777.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toothcare.controller.patient.PatientController">
     <stylesheets>
-        <URL value="@../../style/styles.css" />
+        <URL value="@../../style/form_style.css" />
     </stylesheets>
 
     <!-- Patient List -->
-    <TableView fx:id="patientTableView" layoutX="24.0" layoutY="57.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClick" prefHeight="300.0" prefWidth="736.0">
+    <TableView fx:id="patientTableView" layoutX="24.0" layoutY="57.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClick" prefHeight="300.0" prefWidth="730.0">
         <columns>
             <TableColumn fx:id="nameCol" prefWidth="200.0" text="Name" />
             <TableColumn fx:id="addressCol" prefWidth="333.5999755859375" text="Address" />
-            <TableColumn fx:id="phoneCol" prefWidth="200.7999267578125" text="Phone" />
+            <TableColumn fx:id="phoneCol" prefWidth="200.7999267578125" text="Phone NO" />
 
         </columns>
     </TableView>
 
     <!-- Patient Form -->
-    <TextField fx:id="nameId" layoutX="24.0" layoutY="372.0" prefHeight="26.0" prefWidth="333.0" promptText="Name" />
-    <TextField fx:id="addressId" layoutX="24.0" layoutY="410.0" prefHeight="33.0" prefWidth="694.0" promptText="Address" />
-    <TextField fx:id="phoneId" layoutX="371.0" layoutY="372.0" prefHeight="26.0" prefWidth="346.0" promptText="Phone" />
+    <TextField fx:id="nameId" layoutX="24.0" layoutY="372.0" prefHeight="31.0" prefWidth="373.0" promptText="Name" />
+    <TextField fx:id="addressId" layoutX="22.0" layoutY="410.0" prefHeight="34.0" prefWidth="736.0" promptText="Address" />
+    <TextField fx:id="phoneId" layoutX="405.0" layoutY="372.0" prefHeight="31.0" prefWidth="352.0" promptText="Phone" />
 
     <!-- Buttons for actions -->
-    <Button layoutX="371.0" layoutY="457.0" mnemonicParsing="false" onAction="#updatePatient" prefHeight="47.0" prefWidth="146.0" text="Update" />
-    <Button layoutX="198.0" layoutY="457.0" mnemonicParsing="false" onAction="#deletePatient" prefHeight="47.0" prefWidth="159.0" text="Delete" />
+    <Button layoutX="526.0" layoutY="461.0" mnemonicParsing="false" onAction="#updatePatient" prefHeight="42.0" prefWidth="110.0" text="Update" />
+    <Button layoutX="412.0" layoutY="462.0" mnemonicParsing="false" onAction="#deletePatient" prefHeight="42.0" prefWidth="104.0" text="Delete" />
     <TextField fx:id="searchPhoneId" layoutX="24.0" layoutY="20.0" prefHeight="26.0" prefWidth="527.0" promptText="Name" />
     <Button layoutX="560.0" layoutY="20.0" mnemonicParsing="false" onAction="#searchPatient" prefHeight="30.0" prefWidth="198.0" text="Search By Phone No" />
-    <Button layoutX="24.0" layoutY="457.0" mnemonicParsing="false" onAction="#resetPatientDetail" prefHeight="47.0" prefWidth="159.0" text="Reset" />
-    <Button layoutX="537.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickOnPatientAddBtn" prefHeight="47.0" prefWidth="180.0" text="Add" />
+    <Button layoutX="288.0" layoutY="462.0" mnemonicParsing="false" onAction="#resetPatientDetail" prefHeight="42.0" prefWidth="110.0" text="Reset" />
+    <Button layoutX="647.0" layoutY="462.0" mnemonicParsing="false" onAction="#clickOnPatientAddBtn" prefHeight="41.0" prefWidth="110.0" text="Add" />
 </AnchorPane>

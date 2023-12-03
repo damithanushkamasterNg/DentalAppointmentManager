@@ -15,7 +15,7 @@
     </stylesheets>
 
     <!-- Appointment List -->
-    <TableView fx:id="appointmentTableView" layoutX="48.0" layoutY="109.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClickOnTableBody" prefHeight="300.0" prefWidth="736.0">
+    <TableView fx:id="appointmentTableView" layoutX="38.0" layoutY="107.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onMouseClickOnTableBody" prefHeight="300.0" prefWidth="816.0">
         <columns>
             <TableColumn fx:id="patientIdCol" prefWidth="100.0" text="Patient ID" />
             <TableColumn fx:id="channelDateCol" prefWidth="154.40000915527344" text="Channel Date" />
@@ -26,21 +26,21 @@
             <TableColumn fx:id="paymentStatus" prefWidth="149.5999755859375" text="Payment Status" />
         </columns>
     </TableView>
-    <TextField fx:id="channelTimeField" layoutX="443.0" layoutY="426.0" prefHeight="26.0" prefWidth="150.0" promptText="Channel Time" />
+    <TextField fx:id="channelTimeField" layoutX="460.0" layoutY="426.0" prefHeight="28.0" prefWidth="133.0" promptText="Channel Time" />
     <TextField fx:id="treatmentFeeId" layoutX="355.0" layoutY="465.0" prefHeight="28.0" prefWidth="239.0" promptText="Treatment Fee" />
     <!-- Buttons for actions -->
-    <Button layoutX="394.0" layoutY="567.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="38.0" prefWidth="98.0" text="Update" />
-    <Button layoutX="32.0" layoutY="567.0" mnemonicParsing="false" onAction="#resetAppointmentDetail" prefHeight="38.0" prefWidth="97.0" text="Reset" />
-    <Button layoutX="155.0" layoutY="567.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="38.0" prefWidth="98.0" text="Delete" />
-    <Button layoutX="279.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickOnAppointmentAddBtn" prefHeight="38.0" prefWidth="98.0" text="Add" />
+    <Button layoutX="644.0" layoutY="567.0" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="38.0" prefWidth="98.0" text="Update" />
+    <Button layoutX="306.0" layoutY="567.0" mnemonicParsing="false" onAction="#resetAppointmentDetail" prefHeight="38.0" prefWidth="97.0" text="Reset" />
+    <Button layoutX="416.0" layoutY="567.0" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="38.0" prefWidth="98.0" text="Delete" />
+    <Button layoutX="528.0" layoutY="567.0" mnemonicParsing="false" onAction="#clickOnAppointmentAddBtn" prefHeight="38.0" prefWidth="98.0" text="Add" />
    <DatePicker fx:id="channelDateField" layoutX="248.0" layoutY="426.0" promptText="Channel Date" />
    <ComboBox fx:id="patientIdField" layoutX="32.0" layoutY="424.0" prefHeight="30.0" prefWidth="210.0" promptText="Patient" />
    <ComboBox fx:id="treatmentFieldId" layoutX="32.0" layoutY="465.0" onAction="#onChangeTreatmentType" prefHeight="28.0" prefWidth="309.0" promptText="Treatment ID" />
-   <ComboBox fx:id="regFeeStatusField" layoutX="609.0" layoutY="426.0" onAction="#onChangeRegisterFee" prefHeight="30.0" prefWidth="239.0" promptText="Register Fee Status" />
-   <TextField fx:id="balanceToBePaidId" layoutX="606.0" layoutY="465.0" prefHeight="28.0" prefWidth="246.0" promptText="Balace To Be Paid" />
-   <ComboBox fx:id="patientIdForSearch" layoutX="70.0" layoutY="39.0" prefHeight="28.0" prefWidth="450.0" promptText="Select a Patient" />
-   <Button layoutX="549.0" layoutY="39.0" mnemonicParsing="false" onAction="#searchAppointmentByPatientId" prefHeight="30.0" prefWidth="246.0" text="Search By Patient" />
+   <ComboBox fx:id="regFeeStatusField" layoutX="609.0" layoutY="426.0" onAction="#onChangeRegisterFee" prefHeight="30.0" prefWidth="246.0" promptText="Register Fee Status" />
+   <TextField fx:id="balanceToBePaidId" layoutX="606.0" layoutY="465.0" prefHeight="28.0" prefWidth="246.0" promptText="Balance To Be Paid" />
+   <ComboBox fx:id="patientIdForSearch" layoutX="40.0" layoutY="38.0" prefHeight="30.0" prefWidth="536.0" promptText="Select a Patient" />
+   <Button layoutX="595.0" layoutY="38.0" mnemonicParsing="false" onAction="#searchAppointmentByPatientId" prefHeight="30.0" prefWidth="256.0" text="Search By Patient" />
    <TextField fx:id="paymentAmountId" layoutX="31.0" layoutY="512.0" prefHeight="30.0" prefWidth="310.0" promptText="Payment Amount" />
    <DatePicker fx:id="paymentDateId" layoutX="349.0" layoutY="513.0" prefHeight="30.0" prefWidth="246.0" promptText="Payment Date" />
-   <Button layoutX="499.0" layoutY="567.0" fx:id="paymentButtonId" mnemonicParsing="false" onAction="#createPayment" prefHeight="38.0" prefWidth="98.0" text="Pay" />
+   <Button fx:id="paymentButtonId" layoutX="753.0" layoutY="567.0" mnemonicParsing="false" onAction="#createPayment" prefHeight="38.0" prefWidth="98.0" text="Pay" />
 </AnchorPane>

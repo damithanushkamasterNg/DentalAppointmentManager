@@ -214,12 +214,6 @@ public class PatientController implements Initializable {
         addressCol.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         phoneCol.setCellValueFactory(cellData -> cellData.getValue().phoneProperty());
 
-
-        // Set table column width
-        nameCol.setPrefWidth(200);
-        addressCol.setPrefWidth(200);
-        phoneCol.setPrefWidth(100);
-
         // Add the columns to the TableView
         patientTableView.getColumns().setAll(nameCol, addressCol, phoneCol);
         loadAllPatient();
