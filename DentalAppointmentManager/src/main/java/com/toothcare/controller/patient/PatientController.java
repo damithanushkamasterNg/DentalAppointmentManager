@@ -19,9 +19,13 @@ import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
 
+    @FXML
     public TextField nameId;
+    @FXML
     public TextField addressId;
+    @FXML
     public TextField phoneId;
+    @FXML
     public TextField searchPhoneId;
 
     @FXML

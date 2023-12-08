@@ -22,11 +22,14 @@ import java.util.ResourceBundle;
 public class AppointmentController implements Initializable {
 
 
+    @FXML
     public TextField channelTimeField;
+    @FXML
     public TextField treatmentIdField;
+    @FXML
     public TextField appointmentStatusField;
+    @FXML
     public DatePicker channelDateField;
-
 
     @FXML
     public TextField balanceToBePaidId;
@@ -49,12 +52,6 @@ public class AppointmentController implements Initializable {
 
     @FXML
     private ComboBox<String> regFeeStatusField;
-
-    private final Map<String, Boolean> regFeeStatusMap = new HashMap<>();
-
-    private final Map<String, Integer> treatmentMap = new HashMap<>();
-    private final Map<String, Integer> patientMap = new HashMap<>();
-
 
     @FXML
     private TableView<Appointment> appointmentTableView;
@@ -80,6 +77,9 @@ public class AppointmentController implements Initializable {
     @FXML
     private TableColumn<Appointment, String> paymentStatus;
 
+    private final Map<String, Boolean> regFeeStatusMap = new HashMap<>();
+    private final Map<String, Integer> treatmentMap = new HashMap<>();
+    private final Map<String, Integer> patientMap = new HashMap<>();
     public int appointmentId;
 
 

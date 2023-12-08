@@ -23,13 +23,14 @@ public class DashboardController {
         stage.show();
     }
 
+    @FXML
     public void clickAppointmentManagementBtn(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(this.getClass().getResource("/view/appointment/appointment_form.fxml")));
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
 
-        stage.setTitle("Appointment Management");
+        stage.setTitle("Booking & Billing Hub");
         stage.show();
     }
 }

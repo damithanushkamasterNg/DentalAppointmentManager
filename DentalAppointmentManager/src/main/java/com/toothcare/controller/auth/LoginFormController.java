@@ -14,6 +14,7 @@ import java.util.Objects;
 
 public class LoginFormController {
 
+    @FXML
     public AnchorPane loginAnc;
 
     @FXML
